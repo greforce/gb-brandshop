@@ -1,0 +1,105 @@
+.register-main {
+  padding-top: 60px;
+  color: $main-color;
+  font-weight: 400;
+  padding-left: 3px;
+  padding-bottom: 94px;
+}
+
+
+.register-main__title {
+  height: 72px;
+  line-height: 72px;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
+}
+
+.register-main input[type="email"],
+.register-main input[type="text"],
+.register-main input[type="password"] {
+  margin-top: 7px;
+  margin-bottom: 15px;
+  width: 390px;
+  height: 25px;
+  background-color: inherit;
+  outline: none;
+  @include border-solid-1($border-slider);
+}
+
+.register-main label {
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: -1px;
+  padding-top: 2px;
+}
+
+.register-main label + span {
+  color: $checkout-red-p;
+  font-size: 17px;
+}
+
+.register-main button {
+  width: 180px;
+  height: 50px;
+  background-color: inherit;
+  @include border-solid-1($border-slider);
+  font-size: 14px;
+  font-weight: 700;
+  color: $checkout-button;
+  margin-top: 22px;
+  margin-bottom: 78px;
+  outline: none;
+}
+
+//.register-main button + span {
+//  position: relative;
+//  font-weight: 400;
+//  margin-left: 27px;
+//  top: 5px;
+//}
+
+.register-main__div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+//div.checkout-steps__active {
+//  display: flex;
+//}
+
+.register-main__div form {
+  width: 515px;
+  margin-left: 35px;
+}
+
+.register-main__div form h3 {
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+.register-main__p-light,
+.register-main__p-light1 {
+  font-size: 13px;
+  color: $checkout-light-p;
+  margin-top: 7px;
+  margin-bottom: 14px;
+}
+
+.register-main__p-light1 {
+  margin-top: -6px;
+  margin-bottom: 14px;
+}
+
+.register-main__p-red {
+  font-size: 13px;
+  color: $checkout-red-p;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+
+
+
