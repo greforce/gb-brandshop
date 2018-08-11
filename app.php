@@ -4,14 +4,14 @@ session_start();
 
 require_once('autoload.php');
 
-$mytest = 0;
+var_dump($_GET);
 
 try{
   if ($_POST['metod'] == 'ajax')
   {
     ob_start(); //Запускаем буферизауию вывода
 
-    db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
+    db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
 
     $PageAjax = $_POST['PageAjax']; //Получаем действие на AJAX
@@ -31,7 +31,7 @@ try{
   }
   elseif ($_POST['metod'] == 'basket') // работаем с запросами по корзине - буферизация не нужна
   {
-      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
+      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
       $isAuth = Auth::logIn();
       if (!$isAuth) {
@@ -72,7 +72,7 @@ try{
   }
   elseif ($_POST['metod'] == 'catalog') // работаем с выдачей каталога
   {
-      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
+      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
       $result = Product::catalog();
 
@@ -80,10 +80,9 @@ try{
   }
   elseif ($_POST['metod'] == 'register') // работаем с регистрацией нового
   {
-      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
+      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
       $result = Auth::registerUser();
-      $mytest = $result;
 
       echo json_encode($result);
   }
@@ -95,7 +94,6 @@ try{
 }
 catch (PDOException $e){
     echo "DB is not available";
-    echo ' ' . $mytest . ' ';
     var_dump($e->getTrace());
 }
 catch (Exception $e){
