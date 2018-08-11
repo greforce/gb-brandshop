@@ -2,7 +2,7 @@
 $config['db_user'] = 'branduser';
 $config['db_password'] = '123';
 $config['db_base'] = 'brandnew';
-$config['db_host'] = '192.168.0.100';
+$config['db_host'] = 'localhost';
 $config['db_charset'] = 'UTF-8';
 $config['db_port'] = '3306';
 
@@ -20,5 +20,5 @@ $config['path_templates'] = $config['path_root'] . '/../templates';
 
 $config['path_logs'] = $config['path_root'] . '/../logs';
 
-$config['sitename'] = 'Internet Shop Brandshop | ';
-$config['domain'] = 'brand.gb:8888';
+$config['sitename'] = 'Brand Shop | ';
+$config['domain'] = 'brandshop.mtxweb.site';
