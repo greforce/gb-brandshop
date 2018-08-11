@@ -4,7 +4,7 @@ session_start();
 
 require_once('autoload.php');
 
-var_dump($_GET);
+// var_dump($_GET);
 
 try{
   if ($_POST['metod'] == 'ajax')
