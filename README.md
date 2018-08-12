@@ -6,7 +6,7 @@
 - приведение его в соответствие с принципами MVC (версия на PHP)
 - переделка проекта с движка PHP на Node.js
 
-адрес сайта на сервере: brandshop.mtxweb.site
+адрес сайта на сервере: [brandshop.mtxweb.site](brandshop.mtxweb.site)
 
 ## Структура проекта
 
