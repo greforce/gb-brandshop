@@ -7,7 +7,7 @@ require_once('autoload.php');
 // var_dump($_GET);
 
 try{
-  if ($_POST['metod'] == 'ajax')
+  if ($_POST['metod'] == 'ajax') // тут просто куски разметки меняю по запросам с JS самой страницы. тоже без объектов практически
   {
     ob_start(); //Запускаем буферизауию вывода
 
@@ -29,7 +29,7 @@ try{
 
     echo json_encode(['result' => $data['isAuth'], 'html' => $str]);
   }
-  elseif ($_POST['metod'] == 'basket') // работаем с запросами по корзине - буферизация не нужна
+  elseif ($_POST['metod'] == 'basket') // работаем с запросами по корзине - буферизация не нужна ПЛЮС еще и заказы намешал сюда.. ЖУТЬ
   {
       db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
@@ -70,7 +70,7 @@ try{
 
 
   }
-  elseif ($_POST['metod'] == 'catalog') // работаем с выдачей каталога
+  elseif ($_POST['metod'] == 'catalog') // работаем с выдачей каталога - ТУТ ВООБЩЕ БЕЗ ОБЪЕКТОВ РАБОТАЕМ... ПЛОХО ВСЕ ПЛОХО...
   {
       db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
@@ -78,7 +78,7 @@ try{
 
       echo json_encode($result);
   }
-  elseif ($_POST['metod'] == 'register') // работаем с регистрацией нового
+  elseif ($_POST['metod'] == 'register') // работаем с регистрацией нового - ТУТ ВООБЩЕ БЕЗ ОБЪЕКТОВ РАБОТАЕМ... ПЛОХО ВСЕ ПЛОХО...
   {
       db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
@@ -86,7 +86,7 @@ try{
 
       echo json_encode($result);
   }
-  else
+  else // тут создаеются экземпляры соответствующих контрллеров... всего их 6 штук разных
   {
       App::init();  //Запускаем статический метод init класса App. В соответствии с внутренними правилами имен находится в файле app.class.php
   }

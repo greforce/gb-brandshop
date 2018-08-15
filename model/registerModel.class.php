@@ -2,11 +2,11 @@
 
 class registerModel extends Model
 {
-    public $view = 'profile';
+    public $view = 'profile'; // ошибка?? должно быть register
     public $title;
 
     function __construct()
-    { 
+    {
       parent::__Construct();
       $this->title .= "Регистрация нового пользователя";
 
@@ -14,8 +14,8 @@ class registerModel extends Model
 
 
 
-    public function index($data = NULL, $deep = 0) 
-    {     
+    public function index($data = NULL, $deep = 0)
+    {
 
 
     }
