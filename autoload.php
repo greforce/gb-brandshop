@@ -1,6 +1,6 @@
 <?php
 //подключаем автозагрузчик twig и запускаем статический метод aregister
-require_once '../vendor/autoload.php'; 
+require_once '../vendor/autoload.php';
 
 spl_autoload_register("gbStandardAutoload"); //Регистрируем собственный автозагрузчик
 
@@ -10,7 +10,8 @@ function gbStandardAutoload($className)
     $dirs = [
         'controller',
         'lib',
-        'model'
+        'model',
+        'lib/Command',
     ];
     $found = false;
 	//Имя файла формируется из имени класса и '.class.php'

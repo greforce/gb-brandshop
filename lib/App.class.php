@@ -13,7 +13,8 @@ class App
 		Используется метод get('db_user') класса Config с параметром который необходимо получить. Файл Config.class.php
 		В указанном примере параметр db_user
 		*/
-        db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
+        // уже не нужно. ведь мы и так инициализировали коннекшн к db при старте в app.php
+        // db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
 
 		//CLI - интерфейс командной строки

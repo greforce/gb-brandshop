@@ -7,89 +7,20 @@ require_once('autoload.php');
 // var_dump($_GET);
 
 try{
-  if ($_POST['metod'] == 'ajax') // тут просто куски разметки меняю по запросам с JS самой страницы. тоже без объектов практически
-  {
-    ob_start(); //Запускаем буферизауию вывода
+  // оставляем Singleton - но коннект делаем только один раз в начале работы
+  // поэтому если какие-то вопросы по коннекту к db - то только здесь. единая точка.
+  // кроме того - по факту класс db - это Адаптер между PDO и классами нашего приложения
+  db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
-    db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
+  $router = new Command();
 
+  $router->addCommand(new AjaxCommand());
+  $router->addCommand(new BasketCommand());
+  $router->addCommand(new CatalogCommand());
+  $router->addCommand(new RegisterCommand());
+  $router->addCommand(new AppCommand());
 
-    $PageAjax = $_POST['PageAjax']; //Получаем действие на AJAX
-    $data = Ajax::$PageAjax();
-    $view = Ajax::$views;
-
-    $loader = new Twig_Loader_Filesystem(Config::get('path_templates'));
-    $twig = new Twig_Environment($loader);
-    $template = $twig->loadTemplate($view);
-
-    echo $template->render($data);
-    $str = ob_get_contents(); //Записываем в переменную то, что в буфере
-
-    ob_end_clean(); //Очищаем буфер
-
-    echo json_encode(['result' => $data['isAuth'], 'html' => $str]);
-  }
-  elseif ($_POST['metod'] == 'basket') // работаем с запросами по корзине - буферизация не нужна ПЛЮС еще и заказы намешал сюда.. ЖУТЬ
-  {
-      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
-
-      $isAuth = Auth::logIn();
-      if (!$isAuth) {
-        $userId = null;
-      } else {
-        $userId = $isAuth[0]['id_user'];
-      }
-
-      $basketOperation = $_POST['req'];
-      if ($basketOperation == 'deleteorder') { // пока что здесь разместил метод работы с deleteorder
-        $result = Basket::$basketOperation($isAuth[0]);
-        if ($result) {
-          ob_start(); //Запускаем буферизауию вывода
-
-          $loader = new Twig_Loader_Filesystem(Config::get('path_templates'));
-          $twig = new Twig_Environment($loader);
-          $template = $twig->loadTemplate('profile-main-orders.tmpl');
-          $content['orders'] = Model::getOrders($isAuth);
-          $data['isAuth'] = $isAuth;
-          $data['content_data'] = $content;
-
-          echo $template->render($data);
-          $str = ob_get_contents(); //Записываем в переменную то, что в буфере
-
-          ob_end_clean(); //Очищаем буфер
-
-          echo json_encode(['result' => true, 'html' => $str]);
-        } else {
-          echo json_encode(['result' => false, 'html' => null]);
-        }
-      } else {
-        $result = Basket::$basketOperation($userId);
-        echo json_encode($result);
-      }
-
-
-
-  }
-  elseif ($_POST['metod'] == 'catalog') // работаем с выдачей каталога - ТУТ ВООБЩЕ БЕЗ ОБЪЕКТОВ РАБОТАЕМ... ПЛОХО ВСЕ ПЛОХО...
-  {
-      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
-
-      $result = Product::catalog();
-
-      echo json_encode($result);
-  }
-  elseif ($_POST['metod'] == 'register') // работаем с регистрацией нового - ТУТ ВООБЩЕ БЕЗ ОБЪЕКТОВ РАБОТАЕМ... ПЛОХО ВСЕ ПЛОХО...
-  {
-      db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
-
-      $result = Auth::registerUser();
-
-      echo json_encode($result);
-  }
-  else // тут создаеются экземпляры соответствующих контрллеров... всего их 6 штук разных
-  {
-      App::init();  //Запускаем статический метод init класса App. В соответствии с внутренними правилами имен находится в файле app.class.php
-  }
+  $router->runCommand($_POST['metod']);
 
 }
 catch (PDOException $e){
