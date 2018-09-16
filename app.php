@@ -12,6 +12,9 @@ try{
   // кроме того - по факту класс db - это Адаптер между PDO и классами нашего приложения
   db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'), Config::get('db_host'));
 
+  // ЭТО ВСЕ ЖЕ ПАТТЕРН  Chain of Responsibiluty (не Команда)
+  // в моей реализации если хотя бы один обработчик сработал - то прекращается обработка
+  // но можно поменять и дать всем обрабатывать (в моем конкретном случае это НЕ надо делать)
   $router = new Command();
 
   $router->addCommand(new AjaxCommand());
