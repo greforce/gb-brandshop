@@ -7,6 +7,8 @@ require_once('autoload.php');
 // var_dump($_GET);
 
 try{
+  date_default_timezone_set('Europe/Moscow'); // перенес из App.class.php
+
   // оставляем Singleton - но коннект делаем только один раз в начале работы
   // поэтому если какие-то вопросы по коннекту к db - то только здесь. единая точка.
   // кроме того - по факту класс db - это Адаптер между PDO и классами нашего приложения
@@ -21,7 +23,9 @@ try{
   $router->addCommand(new BasketCommand());
   $router->addCommand(new CatalogCommand());
   $router->addCommand(new RegisterCommand());
-  $router->addCommand(new AppCommand());
+  
+  $router->addCommand(new AppCommand()); // вот это будет Front Controller
+  // конечно, лучше было бы все команды сделать как фронт контроллер, но пока попробую только _GET
 
   $router->runCommand($_POST['metod']);
 
