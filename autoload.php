@@ -13,6 +13,7 @@ function gbStandardAutoload($className)
         'model',
         'lib/Command',
         'lib/FrontController',
+        'api',
     ];
     $found = false;
 	//Имя файла формируется из имени класса и '.class.php'

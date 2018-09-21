@@ -6,7 +6,7 @@ class productModel extends Model
     public $title;
 
     function __construct()
-    { 
+    {
       parent::__Construct();
       $this->title .= "Products";
 
@@ -14,25 +14,25 @@ class productModel extends Model
 
 
 
-    public function index($data = NULL, $deep = 0) 
-    {     
+    public function index($data = NULL, $deep = 0)
+    {
 
 
     }
 
 
-    public function show($data)
+    public function show($id)
     {
         // $this->view .= "/" . __FUNCTION__ . '.php';
-        // db::getInstance()->Query('UPDATE `goods` SET `view` = `view` + 1 where id_good = "'. $data['id'] .'"');
-        $result['single_item'] = Product::singleItemLoad($data['id']);
+        // db::getInstance()->Query('UPDATE `goods` SET `view` = `view` + 1 where id_good = "'. $id .'"');
+        $result['single_item'] = Product::singleItemLoad($id);
         $result['maylike_product'] = Product::maylikeProduct();
-        
-        
-        
+
+
+
         return $result;
-         
-    }   
+
+    }
 
 
 

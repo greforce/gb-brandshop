@@ -11,15 +11,15 @@ class productController extends Controller
     $this->view .= "/" . __FUNCTION__ . '.php';
 
     echo $this->controller_view();
-      
+
   }
 
 
-  public function show()
+  public function show($id)
   {
     $this->view .= "/" . __FUNCTION__ . '.php';
 
-    echo $this->controller_view($_GET);
+    echo $this->controller_view($id);
   }
 
 
