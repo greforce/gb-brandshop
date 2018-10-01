@@ -98,34 +98,24 @@ protected static function authWithCredential($username, $password, $rememberme =
 {
 	$isAuth = 0;
 
-	$login = $username;
+	$mapper = new UserMapper(db::getInstance());
+	$user = $mapper->findByLogin($username);
 
-
-	$sql['sql'] = "select id_user, login, password from users where login = :login";
-	$sql['param'] =
-		[
-			'login' => $login,
-		];
-	$user_date = db::getInstance()->Select($sql['sql'], $sql['param']);
-
-
-	if ($user_date)
+	if ($user)
 	{
-		$passHash = $user_date[0]['password'];
-		$id_user = $user_date[0]['id_user'];
 		$idUserCookie = microtime(true) . random_int(100, PHP_INT_MAX); //Используется более сложная функция генерации случайных чисел
 		$idUserCookieHash = hash("sha256", $idUserCookie);
-		if (password_verify($password, $passHash))
+		if (password_verify($password, $user->getPassword()))
 		{
 
 			$_SESSION['login'] = $username;
-			$_SESSION['id_user'] = $id_user;
+			$_SESSION['id_user'] = $user->getId();
 			$_SESSION['IdUserSession'] = $idUserCookieHash;
 
 			$sql['sql'] = "insert into users_auth (user_id, hash_cookie, date, comment) values (:id_user, :idUserCookieHash, now(), :idUserCookie)";
 			$sql['param'] =
 				[
-					'id_user' => $id_user,
+					'id_user' => $user->getId(),
 					'idUserCookieHash' => $idUserCookieHash,
 					'idUserCookie' => $idUserCookie
 

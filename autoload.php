@@ -13,6 +13,7 @@ function gbStandardAutoload($className)
         'model',
         'lib/Command',
         'lib/FrontController',
+        'lib/DataMapper',
         'api',
     ];
     $found = false;
